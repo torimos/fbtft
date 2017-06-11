@@ -3,7 +3,7 @@
   ProjectName: FBTFT driver                       ***** *****
 	       for the RA8875 LCD Controller     *     *      ************
 						*   **   **   *           *
-  Copyright © by Pf@nne & NOTRO                *   *   *   *   *   ****	   *
+  Copyright ï¿½ by Pf@nne & NOTRO                *   *   *   *   *   ****	   *
 						*   *       *   *   *   *   *
   Last modification by:                        *   *       *   *   ****    *
   - Pf@nne (pf@nne-mail.de)                     *   *     *****           *
@@ -76,7 +76,7 @@ static int init_display(struct fbtft_par *par)
 		"display size %dx%d\n", par->info->var.xres, par->info->var.yres);
 
 	par->fbtftops.reset(par);
-
+	
 	if ((par->info->var.xres == 320) && (par->info->var.yres == 240)) {
 		/* PLL clock frequency */
 		write_reg(par, 0x88 , 0x0A);
@@ -150,41 +150,59 @@ static int init_display(struct fbtft_par *par)
 		write_reg(par, 0x1E , 0x00);
 		write_reg(par, 0x1F , 0x01);
 	} else if ((par->info->var.xres == 800) && (par->info->var.yres == 480)) {
-		/* PLL clock frequency */
-		write_reg(par, 0x88 , 0x0B);
-		write_reg(par, 0x89 , 0x02);
-		mdelay(10);
+		/* PLL clock frequency  */
+		write_reg(par,0x88,0x0C);
+		mdelay(1);
+		write_reg(par,0x89,0x01);
+		mdelay(1);
 		/* color deep / MCU Interface */
-		write_reg(par, 0x10 , 0x0C);
+		write_reg(par,0x10,0x0C);
 		/* pixel clock period */
-		write_reg(par, 0x04 , 0x81);
+		write_reg(par,0x04,0x81);
 		mdelay(1);
 		/* horizontal settings */
-		write_reg(par, 0x14 , 0x63);
-		write_reg(par, 0x15 , 0x03);
-		write_reg(par, 0x16 , 0x03);
-		write_reg(par, 0x17 , 0x02);
-		write_reg(par, 0x18 , 0x00);
+		write_reg(par,0x14,0x63);
+		write_reg(par,0x15,0x00);
+		write_reg(par,0x16,0x03);
+		write_reg(par,0x17,0x03);
+		write_reg(par,0x18,0x0B);
 		/* vertical settings */
-		write_reg(par, 0x19 , 0xDF);
-		write_reg(par, 0x1A , 0x01);
-		write_reg(par, 0x1B , 0x14);
-		write_reg(par, 0x1C , 0x00);
-		write_reg(par, 0x1D , 0x06);
-		write_reg(par, 0x1E , 0x00);
-		write_reg(par, 0x1F , 0x01);
+		write_reg(par,0x19,0xDF);
+		write_reg(par,0x1A,0x01);
+		write_reg(par,0x1B,0x1F);
+		write_reg(par,0x1C,0x00);
+		write_reg(par,0x1D,0x16);
+		write_reg(par,0x1E,0x00);
+		write_reg(par,0x1F,0x01);
+		// /* window settings */
+		// write_reg(par,0x20,0x00);
+		// /* window settings */
+		// write_reg(par,0x30,0x00);
+		// write_reg(par,0x31,0x00);
+		// write_reg(par,0x34,0x1F);
+		// write_reg(par,0x35,0x03);
+		// write_reg(par,0x32,0x00);
+		// write_reg(par,0x33,0x00);
+		// write_reg(par,0x36,0xDF);
+		// write_reg(par,0x37,0x01);
+		// write_reg(par,0x46,0x00);
+		// write_reg(par,0x47,0x00);
+		// write_reg(par,0x48,0x00);
+		// write_reg(par,0x49,0x00);
 	} else {
 		dev_err(par->info->device, "display size is not supported!!");
 		return -1;
 	}
 
 	/* PWM clock */
-	write_reg(par, 0x8a , 0x81);
+	write_reg(par, 0x8a , 0x8A);
 	write_reg(par, 0x8b , 0xFF);
 	mdelay(10);
 
 	/* Display ON */
 	write_reg(par, 0x01 , 0x80);
+	/* GPIOX ON */
+	//write_reg(par, 0xC7, 0x01);
 	mdelay(10);
 
 	return 0;

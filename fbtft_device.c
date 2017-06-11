@@ -374,6 +374,27 @@ static struct fbtft_device_display displays[] = {
 			}
 		}
 	}, {
+		.name = "er_tftm070_48",
+		.spi = &(struct spi_board_info) {
+			.modalias = "fb_ra8875",
+			.max_speed_hz = 48000000,
+			.mode = SPI_MODE_0,
+			.platform_data = &(struct fbtft_platform_data) {
+				.display = {
+					.buswidth = 8,
+					.backlight = 1,
+					.width = 800,
+					.height = 480,
+				},
+				.bgr = true,
+				.gpios = (const struct fbtft_gpio []) {
+					{ "reset", 25 },
+					{ "dc", 24 },
+					{},
+				},
+			}
+		}
+	}, {
 		.name = "flexfb",
 		.spi = &(struct spi_board_info) {
 			.modalias = "flexfb",
